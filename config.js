@@ -18,18 +18,6 @@ environments.dev = {
   },
 };
 
-environments.prod = {
-  httpPort: 3000,
-  httpsPort: 4000,
-  envName: 'prod',
-  hashingSecret: '123123123',
-  stripe: {
-    accountSid: '',
-    authToken: '',
-    fromPhone: '',
-  },
-};
-
 const currentEnv = typeof (process.env.NODE_ENV) === 'string'
   ? process.env.NODE_ENV.toLowerCase() : '';
 

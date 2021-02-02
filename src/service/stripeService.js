@@ -1,6 +1,6 @@
 const utils = require('../utils');
 const mailgunService = require('./mailgunService');
-const config = require('../../config');
+const config = require('../../config.local');
 
 const stripeService = {};
 

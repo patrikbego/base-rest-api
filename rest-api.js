@@ -3,7 +3,7 @@ const https = require('https');
 const url = require('url');
 const { StringDecoder } = require('string_decoder');
 const fs = require('fs');
-const config = require('./config');
+const config = require('./config.local');
 const routeHandler = require('./src/routeHandler');
 const utils = require('./src/utils');
 
@@ -28,7 +28,8 @@ restApi.serverHandler = function (req, res) {
     console.log(`header: ${header}${headers[header]}`);
   }
 
-  const list = {}; const
+  const list = {};
+  const
     rc = req.headers.cookie;
   rc && rc.split(';').forEach((cookie) => {
     const parts = cookie.split('=');
@@ -104,7 +105,10 @@ restApi.serverHandler = function (req, res) {
           // res.setHeader('Set-Cookie', "Host-SessionId=" + resBody.token.id + ";")
           // res.setHeader('Set-Cookie', `Host-SessionId1=${resBody.token.id};`);
           res.setHeader('Set-Cookie',
-            `__st=${Buffer.from((JSON.stringify(resBody.token))).toString('base64')}; maxAge=30000; HttpOnly=true; SameSite=None; Secure`);
+            `__st=${Buffer.from((JSON.stringify(resBody.token)))
+              .toString(
+                'base64',
+              )}; maxAge=30000; HttpOnly=true; SameSite=None; Secure`);
           // res.setHeader('Set-Cookie', "se_aut_1=" + resBody.token.id + "; maxAge: 3000; httpOnly: true;")
           // The __Secure- prefix makes a cookie accessible from HTTPS sites only. A HTTP site can not read or update a cookie if the name starts with __Secure-. This protects against the attack we earlier described, where an attacker uses a forged insecure site to overwrite a secure cookie.
           // TODO: cookie for prod : The __Host- prefix does the same as the __Secure- prefix and more. A __Host--prefixed cookie is only accessible by the same domain it is set on. This means that a subdomain can no longer overwrite the cookie value.

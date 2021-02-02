@@ -1,7 +1,7 @@
 // Dependencies
 const crypto = require('crypto');
 const https = require('https');
-const config = require('../config');
+const config = require('../config.local');
 
 // Container for all the helpers
 const utils = {};
@@ -130,34 +130,31 @@ utils.extractTokenFromHeaders = function (headers) {
   return token;
 };
 
-const unitTestPoc = {
-  simpleSum(a, b) {
-    return a + b;
-  },
-  strictSum(a, b) {
-    if (typeof a === 'number' && typeof b === 'number') {
-      return a + b;
-    }
-    throw Error('Invalid Arguments');
-  },
-  promiseSum(a, b) {
-    const sum = (a, b) => a + b;
-
-    const rej = () => {
-      throw Error('Invalid Arguments');
-    };
-    const serviceResponse = new Promise((resolve, reject) => {
-      if (typeof a === 'number' && typeof b === 'number') {
-        setTimeout(() => {
-          resolve(sum(a, b));
-          console.log('summing up !');
-        }, 5000, a, b);
-      } else {
-        reject(rej());
-      }
-    });
-    return serviceResponse;
-  },
+utils.simpleSum = function (a, b) {
+  return a + b;
 };
-module.exports = unitTestPoc;
+utils.strictSum = function (a, b) {
+  if (typeof a === 'number' && typeof b === 'number') {
+    return a + b;
+  }
+  throw Error('Invalid Arguments');
+};
+utils.promiseSum = function (a, b) {
+  const sum = (a, b) => a + b;
+
+  const rej = () => {
+    throw Error('Invalid Arguments');
+  };
+  const serviceResponse = new Promise((resolve, reject) => {
+    if (typeof a === 'number' && typeof b === 'number') {
+      setTimeout(() => {
+        resolve(sum(a, b));
+        console.log('summing up !');
+      }, 50, a, b);
+    } else {
+      reject(rej());
+    }
+  });
+  return serviceResponse;
+};
 module.exports = utils;
