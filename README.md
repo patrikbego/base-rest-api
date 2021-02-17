@@ -12,7 +12,7 @@ The project contains following services:
 `src/service/stripeService.js` - Stripe compressor service  
 `src/service/tokenService.js` - sec token service   
 `src/service/userService.js` - user service  
-&nbsp;
+&nbsp;  
 `src/routeHandler.js` - "proxy" for all api's   
 `src/utils.js` - util library   
 `index.js` - main executable (starts rest api, workers and cli). It start the http server on port 3005 and https on 3010  
